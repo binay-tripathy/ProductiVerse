@@ -1,0 +1,17 @@
+{
+  "short_name": "ProductiVerse",
+  "name": "ProductiVerse",
+  "author": "Binay Tripathy",
+  "manifest_version": 3,
+  "version": "1.0.0",
+  "action": {
+    "default_icon": {
+    "16": "favicon.ico",
+    "48": "logo192.png",
+   "128": "logo512.png"
+    },
+    "default_popup": "index.html",
+    "default_title": "ProductiVerse"
+  }
+}
+

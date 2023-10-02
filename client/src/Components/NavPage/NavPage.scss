@@ -1,0 +1,33 @@
+.container {
+    width: 50%;
+  .header {
+    text-align: center;
+  }
+  .nav {
+    justify-items: center;
+    .row {
+      display: grid;
+      grid-template-columns: 300px 300px;
+      grid-template-rows: 50px 50px;
+      .navlink {
+        justify-self: center;
+        height: 50px;
+        width: 150px;
+        background-color: red;
+        text-align: center;
+      }
+    }
+    .row2 {
+      display: grid;
+      grid-template-columns: 600px;
+      grid-template-rows: 50px 50px;
+      .navlink2 {
+        justify-self: center;
+        height: 50px;
+        width: 76%;
+        background-color: red;
+        text-align: center;
+      }
+    }
+  }
+}
