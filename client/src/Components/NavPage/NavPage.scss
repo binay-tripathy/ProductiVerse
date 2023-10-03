@@ -1,13 +1,14 @@
 .container {
-    width: 50%;
+    width: 100%;
   .header {
     text-align: center;
+    margin-bottom: 30px;
   }
   .nav {
     justify-items: center;
     .row {
       display: grid;
-      grid-template-columns: 300px 300px;
+      grid-template-columns: 200px 200px;
       grid-template-rows: 50px 50px;
       .navlink {
         justify-self: center;
@@ -15,13 +16,18 @@
         width: 150px;
         background-color: red;
         text-align: center;
+        a{
+          text-decoration: none;
+          color: white;
+        }
       }
     }
     .row2 {
       display: grid;
-      grid-template-columns: 600px;
+      grid-template-columns: 400px;
       grid-template-rows: 50px 50px;
       .navlink2 {
+        color: white;
         justify-self: center;
         height: 50px;
         width: 76%;

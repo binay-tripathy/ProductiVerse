@@ -5,7 +5,6 @@
 ProductiVerse is a versatile and feature-packed Chrome extension designed to boost your productivity and help you stay focused. With ProductiVerse, you can manage your tasks, create custom playlists, utilize the Pomodoro technique, block distracting websites, stay motivated with inspirational quotes, track your progress with analytics, and provide valuable feedback. It's an all-in-one productivity solution.
 
 ## Features
-``
 <!-- 
 ### 1. Task Manager
 - Create, organize, and prioritize your tasks efficiently.

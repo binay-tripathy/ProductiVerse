@@ -10,35 +10,35 @@ const NavPage = () => {
             <div className="nav">
                 <div className="row">
 
-                    <div className="navlink">
-                        <span>Manage your tasks</span>
-                    </div>
-                    <div className="navlink">
-                        <span>Playlist</span>
-                    </div>
+                    <button className="navlink">
+                        <a href="/task">Manage your tasks</a>
+                    </button>
+                    <button className="navlink">
+                        <a href='/playlist'>Playlist</a>
+                    </button>
                 </div>
                 <div className="row">
 
-                    <div className="navlink">
-                        <span>Pomodoro Timer</span>
-                    </div>
-                    <div className="navlink">
-                        <span>Website Blocker</span>
-                    </div>
+                    <button className="navlink">
+                        <a href='/pomodoro'>Pomodoro Timer</a>
+                    </button>
+                    <button className="navlink">
+                        <a href='blocker'>Website Blocker</a>
+                    </button>
                 </div>
                 <div className="row">
 
-                    <div className="navlink">
-                        <span>Analytics</span>
-                    </div>
-                    <div className="navlink">
-                        <span>Feedback and Support</span>
-                    </div>
+                    <button className="navlink">
+                        <a href='analytics'>Analytics</a>
+                    </button>
+                    <button className="navlink">
+                        <a href='feedback'>Feedback and Support</a>
+                    </button>
                 </div>
                 <div className="row2">
-                    <div className="navlink2">
+                    <button className="navlink2">
                         <span>Quotes</span>
-                    </div>
+                    </button>
                 </div>
             </div>
             <div className="footer">
