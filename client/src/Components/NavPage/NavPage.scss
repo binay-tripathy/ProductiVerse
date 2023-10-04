@@ -1,5 +1,5 @@
 .container {
-    width: 100%;
+  width: 100%;
   .header {
     text-align: center;
     margin-bottom: 30px;
@@ -12,13 +12,20 @@
       grid-template-rows: 50px 50px;
       .navlink {
         justify-self: center;
+        border: 1px solid #1c1d20;
         height: 50px;
         width: 150px;
+        text-decoration: none;
         background-color: red;
         text-align: center;
-        a{
-          text-decoration: none;
-          color: white;
+        color: white;
+        line-height: 200%;
+        span{
+          height: 45px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 14px;
         }
       }
     }

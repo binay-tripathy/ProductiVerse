@@ -1,5 +1,6 @@
 import React from 'react'
 import './NavPage.scss'
+import { Link } from 'react-router-dom'
 
 const NavPage = () => {
     return (
@@ -9,31 +10,37 @@ const NavPage = () => {
             </div>
             <div className="nav">
                 <div className="row">
-
-                    <button className="navlink">
-                        <a href="/task">Manage your tasks</a>
-                    </button>
-                    <button className="navlink">
-                        <a href='/playlist'>Playlist</a>
-                    </button>
+                    <Link to='/task'className="navlink"><span>Manage your tasks</span></Link>
+                    {/* <button >
+                        <a href="#/task"></a>
+                    </button> */}
+                    <Link to='/playlist'className="navlink"><span>Playlist</span></Link>
+                    {/* <button className="navlink">
+                        <a href='#/playlist'></a>
+                    </button> */}
                 </div>
                 <div className="row">
+                <Link to='/pomodoro'className="navlink"><span>Pomodoro Timer</span></Link>
 
-                    <button className="navlink">
-                        <a href='/pomodoro'>Pomodoro Timer</a>
-                    </button>
-                    <button className="navlink">
-                        <a href='blocker'>Website Blocker</a>
-                    </button>
+                    {/* <button className="navlink">
+                        <a href='#/pomodoro'></a>
+                    </button> */}
+                <Link to='/blocker'className="navlink"><span>Website Blocker</span></Link>
+
+                    {/* <button className="navlink">
+                        <a href='#/blocker'></a>
+                    </button> */}
                 </div>
                 <div className="row">
+                <Link to='/analytics'className="navlink"><span>Analytics</span></Link>
 
-                    <button className="navlink">
-                        <a href='analytics'>Analytics</a>
-                    </button>
-                    <button className="navlink">
-                        <a href='feedback'>Feedback and Support</a>
-                    </button>
+                    {/* <button className="navlink">
+                        <a href='#/analytics'></a>
+                    </button> */}
+                <Link to='/feedback'className="navlink"><span>Feedback and Support</span></Link>
+                    {/* <button className="navlink">
+                        <a href='#/feedback'></a>
+                    </button> */}
                 </div>
                 <div className="row2">
                     <button className="navlink2">
