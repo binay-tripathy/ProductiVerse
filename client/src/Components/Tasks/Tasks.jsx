@@ -17,25 +17,36 @@ const Tasks = () => {
     newTasks.splice(index, 1);
     setTasks(newTasks);
   };
+
+  const handleDoneTask = (index) => {
+    const newTasks = tasks.slice();
+    // const done = newTasks.slice(index, 1);
+    let done = newTasks[index];
+    // console.log(newTasks);
+    done='\u0336'+done+'\u0336';
+  //  setTasks(newTasks);
+    console.log(done);
+  //   console.log(newTasks);
+  };
+
+  const handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      document.getElementById('addTask').click();
+    }
+  }
+
   return (
 
     <div className="todo-list-container">
       <h2>Todo List</h2>
       <div className="task-input">
-        <input
-          type="text"
-          value={taskText}
-          onChange={(e) => setTaskText(e.target.value)}
-          placeholder="Add a task"
-        />
-        <button onClick={handleAddTask}>Add</button>
+        <input type="text" value={taskText} onKeyPress={handleEnter} onChange={(e) => setTaskText(e.target.value)} placeholder="Add a task" />
+        <button id='addTask' onClick={handleAddTask}>Add</button>
       </div>
       <ul>
         {tasks.map((task, index) => (
-          <li key={index}>
-            {task}
-            <button onClick={() => handleDeleteTask(index)}>Delete</button>
-          </li>
+          <li key={index}> {task} <button onClick={() => handleDoneTask(index)}>Done</button> <button onClick={() => handleDeleteTask(index)}>Delete</button></li>
         ))}
       </ul>
     </div>
