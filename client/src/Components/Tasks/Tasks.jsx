@@ -4,6 +4,7 @@ import './Tasks.scss'
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [taskText, setTaskText] = useState('');
+  const [done, setDone] = useState([]);
 
   const handleAddTask = () => {
     if (taskText.trim() !== '') {
@@ -20,14 +21,18 @@ const Tasks = () => {
 
   const handleDoneTask = (index) => {
     const newTasks = tasks.slice();
-    // const done = newTasks.slice(index, 1);
-    let done = newTasks[index];
-    // console.log(newTasks);
-    done='\u0336'+done+'\u0336';
-  //  setTasks(newTasks);
-    console.log(done);
-  //   console.log(newTasks);
+    const completed = newTasks.splice(index, 1);
+    setDone([...done, completed]);
+    setTasks(newTasks);
   };
+
+  const handleUndoTask = (index) => {
+    const Dones = done.slice();
+    let temp = Dones[index];
+    setTasks([...tasks, temp]);
+    Dones.splice(index, 1);
+    setDone(Dones);
+  }
 
   const handleEnter = (e) => {
     if (e.key === 'Enter') {
@@ -45,8 +50,15 @@ const Tasks = () => {
         <button id='addTask' onClick={handleAddTask}>Add</button>
       </div>
       <ul>
+        <h4>Tasks</h4>
         {tasks.map((task, index) => (
           <li key={index}> {task} <button onClick={() => handleDoneTask(index)}>Done</button> <button onClick={() => handleDeleteTask(index)}>Delete</button></li>
+        ))}
+      </ul>
+      <ul>
+        <h4>Completed Tasks</h4>
+        {done.map((task, index) => (
+          <li key={index}> {task} <button onClick={() => handleUndoTask(index)}>Undo</button></li>
         ))}
       </ul>
     </div>
