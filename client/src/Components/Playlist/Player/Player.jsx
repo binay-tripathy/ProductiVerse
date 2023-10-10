@@ -16,7 +16,7 @@ const Player = () => {
             .catch((error) => console.error(error));
     }, [playlistId]);
     if (!playlist) {
-        return <div>Loading...</div>;
+        return <div>Loading</div>;
     }
 
     return (
