@@ -1,21 +1,44 @@
 import React, { useState } from 'react';
 import './Pomodoro.scss';
-// import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar } from 'react-circular-progressbar';
+// import { useEffect } from 'react';
 
 const Pomodoro = () => {
   const [workInterval, setWorkInterval] = useState(25);
-  const [shortBreakInterval, setShortBreakInterval] = useState(5);
-  const [longBreakInterval, setLongBreakInterval] = useState(15);
+  // const [shortBreakInterval, setShortBreakInterval] = useState(5);
+  // const [longBreakInterval, setLongBreakInterval] = useState(15);
+// useEffect(() => {
+//   first
 
-  const handleChange = (e, setInterval) => {
-    setInterval(parseInt(e.target.value));
+//   return () => {
+//     second
+//   }
+// }, [third])
+function handleIntervalChange() {
+  setWorkInterval(workInterval--);
+
+}
+  const handleClick = () => {
+    // setInterval(,1000);
+    setInterval(() => {
+      // let interval = workInterval;
+      // setWorkInterval(interval-1);
+      handleIntervalChange();
+      console.log(workInterval);
+      // while(interval>0){
+      //   if(interval===0){
+      //     break;
+      //   }
+      //   else
+      // }
+    }, 1000);
   };
 
   // const value = 0.66;
 
   return (
     <>
-      <div className="pomodoro">
+      {/* <div className="pomodoro">
         <h2>Custom Pomodoro</h2>
         <div className="interval-inputs">
           <div className="input-container">
@@ -46,11 +69,11 @@ const Pomodoro = () => {
             />
           </div>
         </div>
-        <button type='submit'>Submit</button>
-      </div>
-      {/* <div style={{ width: 200, height: 200 }}>
-        <CircularProgressbar value={value} maxValue={1} text={`${value * 100}%`} />;
       </div> */}
+      <div style={{ width: 200, height: 200 }}>
+        <CircularProgressbar value={workInterval} maxValue={25} text={`${workInterval}min`} />;
+      </div>
+      <button onClick={handleClick}>Submit</button>
     </>
   );
 };
