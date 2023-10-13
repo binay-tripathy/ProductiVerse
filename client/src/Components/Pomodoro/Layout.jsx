@@ -1,4 +1,5 @@
 import React from 'react'
+import './Layout.scss'
 import Navbar from './Navbar/Navbar'
 import Pomodoro from './Pomodoro/Pomodoro'
 import { Route, Routes } from 'react-router-dom'
@@ -12,8 +13,8 @@ const Layout = () => {
             {/* <div className="content"> */}
                 <Routes>
                     <Route index element={<Pomodoro />} />
-                    <Route path='/pomodoro/short' element={<ShortBreak />} />
-                    <Route path='/pomodoro/long' element={<LongBreak />} />
+                    <Route path='short' element={<ShortBreak />} />
+                    <Route path='long' element={<LongBreak />} />
                 </Routes>
             {/* </div> */}
         </>

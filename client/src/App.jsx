@@ -18,7 +18,7 @@ function App() {
         <Route path='/' element={<NavPage />}/>
         <Route path='/task' element={<Tasks />} />
         <Route path='/playlist' element={<Playlist />} />
-        <Route path='/pomodoro' element={<Layout/>} />
+        <Route path='/pomodoro/*' element={<Layout/>} />
         <Route path='/blocker' element={<WebBlocker />} />
         <Route path='/analytics' element={<Analytics />} />
         <Route path='/feedback' element={<Feedback />} />
