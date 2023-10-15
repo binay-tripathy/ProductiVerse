@@ -4,34 +4,17 @@ const fs = require('fs');
 
 const WebBlocker = () => {
 
-  // const filePath = "/etc/hosts";
-  // Note* If you are a windows user, your file path should be C:\Windows\System32\drivers\etc\hosts
-  /**
-   * File path: C:\Windows\System32\drivers\etc\hosts
-   * Backslash needs to be escaped before execurting
-   * const filePath = C:\\Windows\\System32\\drivers\\etc\\hosts
-   */
-
-  // Store the redirection path in a variable
-  // The websites in the block list will be directed to localhost (127.0.0.1)
-
-
   const filePath = "C:\\Windows\\System32\\drivers\\etc\\hosts";
   const redirectPath = "127.0.0.1";
 
   // List of websities to be blocked
   let websites = ["www.facebook.com", "facebook.com"];
 
-  // Set delay (Time interval after which our script should execute)
   let delay = 2000; // 2 seconds
 
-  // Define the blocker function
   let blocker = () => {
-    // Make a new object of Date
     let date = new Date();
-    // Compare whether the current time is free time or block time
     let hours = date.getHours();
-    // Blocking our website from 2pm to 6pm
     if (hours >= 14 && hours < 18) {
       console.log('Time to block websites');
       fs.readFile(filePath, (err, data) => {
