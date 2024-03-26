@@ -12,7 +12,6 @@
       grid-template-rows: 50px 50px;
       margin-top: 10px;
       .navlink {
-        // justify-self: center;
         border: 1px solid #1c1d20;
         height: 50px;
         width: 150px;
@@ -20,7 +19,6 @@
         background-color: red;
         text-align: center;
         color: white;
-        line-height: 200%;
         span{
           height: 45px;
           display: flex;
@@ -36,13 +34,21 @@
       grid-template-rows: 50px 50px;
       margin-top: 10px;
       .navlink2 {
-        color: white;
-        // justify-self: center;
-        margin: 0 25px;
+        margin: 0 auto;
+        border: 1px solid #1c1d20;
         height: 50px;
-        width: 76%;
+        width: 300px;
+        text-decoration: none;
         background-color: red;
         text-align: center;
+        color: white;
+        span{
+          height: 45px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 14px;
+        }
       }
     }
   }

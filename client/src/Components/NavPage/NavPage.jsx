@@ -17,14 +17,8 @@ const NavPage = () => {
                 <Link to='/pomodoro'className="navlink"><span>Pomodoro Timer</span></Link>
                 <Link to='/blocker'className="navlink"><span>Website Blocker</span></Link>
                 </div>
-                {/* <div className="row">
-                <Link to='/analytics'className="navlink"><span>Analytics</span></Link>
-                <Link to='/feedback'className="navlink"><span>Feedback and Support</span></Link>
-                </div> */}
                 <div className="row2">
-                    <button className="navlink2">
-                        <span>Quotes</span>
-                    </button>
+                <Link to='/quotes'className="navlink2"><span>Quotes</span></Link>
                 </div>
             </div>
             <div className="footer">
