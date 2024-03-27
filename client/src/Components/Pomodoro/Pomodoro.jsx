@@ -54,15 +54,29 @@ const Pomodoro = () => {
   };
 
   const handleWorkTimeChange = (e) => {
-    setWorkTime(e.target.value * 60);
-    if (!isRunning) {
-      setCurrentTime(e.target.value * 60);
+    const newWorkTime = e.target.value * 60;
+    if (newWorkTime >= 60) {
+      setWorkTime(newWorkTime);
+      if (!isRunning) {
+        setCurrentTime(newWorkTime);
+      }
+    } else {
+      setWorkTime(60);
+      if (!isRunning) {
+        setCurrentTime(60);
+      }
     }
   };
 
   const handleBreakTimeChange = (e) => {
-    setBreakTime(e.target.value * 60);
+    const newBreakTime = e.target.value * 60;
+    if (newBreakTime >= 60) {
+      setBreakTime(newBreakTime);
+    } else {
+      setBreakTime(60);
+    }
   };
+  
 
   return (
     <div className="pomodoro">

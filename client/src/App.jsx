@@ -5,6 +5,7 @@ import Tasks from './Components/Tasks/Tasks';
 import Playlist from './Components/Playlist/Playlist';
 import WebBlocker from './Components/WebBlocker/WebBlocker';
 import Pomodoro from './Components/Pomodoro/Pomodoro';
+// import Quote from './Components/Quote/Quote';
 
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
         <Route path='/playlist' element={<Playlist />} />
         <Route path='/pomodoro/*' element={<Pomodoro/>} />
         <Route path='/blocker' element={<WebBlocker />} />
+        {/* <Route path='/quotes' element={<Quote />} /> */}
       </Routes>
+      {/* <Quote /> */}
     </>
   );
 }
