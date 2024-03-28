@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import './Pomodoro.scss'
+import './Pomodoro.scss';
 
 const Pomodoro = () => {
   const [workTime, setWorkTime] = useState(25 * 60);
@@ -19,18 +19,24 @@ const Pomodoro = () => {
             if (mode === 'pomodoro') {
               setMode('break');
               setCurrentTime(breakTime);
-            } else if (mode === 'break') {
+            } 
+            else if (mode === 'break') {
               setMode('pomodoro');
               setCurrentTime(workTime);
             }
-          } else {
+          } 
+          else
             return prevTime - 1;
-          }
         });
       }, 1000);
 
+      if (mode === 'pomodoro')
+        navigator.doNotDisturb = true;
+      
       return () => clearInterval(timer);
     }
+    else
+      navigator.doNotDisturb = false;
   }, [isRunning, workTime, breakTime, mode]);
 
   const formatTime = (time) => {
@@ -39,13 +45,9 @@ const Pomodoro = () => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
-  const handleStartClick = () => {
-    setIsRunning(true);
-  };
+  const handleStartClick = () => setIsRunning(true);
 
-  const handlePauseClick = () => {
-    setIsRunning(false);
-  };
+  const handlePauseClick = () => setIsRunning(false);
 
   const handleResetClick = () => {
     setIsRunning(false);
@@ -70,13 +72,12 @@ const Pomodoro = () => {
 
   const handleBreakTimeChange = (e) => {
     const newBreakTime = e.target.value * 60;
-    if (newBreakTime >= 60) {
+    if (newBreakTime >= 60)
       setBreakTime(newBreakTime);
-    } else {
+    else
       setBreakTime(60);
-    }
   };
-  
+
 
   return (
     <div className="pomodoro">

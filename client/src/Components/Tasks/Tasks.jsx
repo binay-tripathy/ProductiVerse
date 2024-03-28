@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import './Tasks.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faRotateLeft, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -52,13 +54,15 @@ const Tasks = () => {
       <ul>
         <h4>Tasks</h4>
         {tasks.map((task, index) => (
-          <li key={index}> {task} <button onClick={() => handleDoneTask(index)}>Done</button> <button onClick={() => handleDeleteTask(index)}>Delete</button></li>
+          <li key={index}> {task} 
+          <button onClick={() => handleDoneTask(index)}><FontAwesomeIcon icon={faCheck} /></button> 
+          <button onClick={() => handleDeleteTask(index)}><FontAwesomeIcon icon={faTrash} /></button></li>
         ))}
       </ul>
       <ul>
         <h4>Completed Tasks</h4>
         {done.map((task, index) => (
-          <li key={index}> {task} <button onClick={() => handleUndoTask(index)}>Undo</button></li>
+          <li key={index}> {task} <button onClick={() => handleUndoTask(index)}><FontAwesomeIcon icon={faRotateLeft} /></button></li>
         ))}
       </ul>
     </div>

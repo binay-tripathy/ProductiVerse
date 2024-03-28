@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 import ReactPlayer from 'react-player';
 
@@ -9,6 +9,29 @@ const Playlist = () => {
   const [currentSource, setCurrentSource] = useState('');
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+
+  const fetchAccessToken = async () => {
+    try {
+      const response = await fetch("https://accounts.spotify.com/api/token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "grant_type=client_credentials&client_id=58cb66cc37d14bcfa0bf8aba4658a435&client_secret=91459c94932c4f67a0c1f02af5247f59"
+      });
+      const data = await response.json();
+      spotifyApi.setAccessToken(data.access_token);
+    }
+    catch (error) {
+      console.error('Error fetching access token:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAccessToken(); 
+    const intervalId = setInterval(fetchAccessToken, 3600);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handlePlayPause = () => setIsPlaying(prevIsPlaying => !prevIsPlaying);
 
@@ -21,7 +44,6 @@ const Playlist = () => {
     const url = event.target.value;
     if (url.includes('open.spotify.com')) {
       const playlistId = url.split('/playlist/')[1].split('?')[0];
-      spotifyApi.setAccessToken(`BQAg_jwowBMzGAx1JLpCLmeUuwEBW43IX37Bwh5NEjpihAjU8yXXHSzU5SiJ_u1Vi4w8pxYsmR1NUCXafNn2j2NUQgG-Y5GPQmQZnbdRx2f68cMQWoM`);
       spotifyApi.getPlaylistTracks(playlistId).then(response => {
         const tracks = response.items.map(item => item.track);
         setPlaylistTracks(tracks);
