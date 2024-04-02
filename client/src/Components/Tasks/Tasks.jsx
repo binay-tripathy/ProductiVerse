@@ -16,9 +16,9 @@ const Tasks = () => {
   };
 
   const handleDeleteTask = (index) => {
-    const newTasks = tasks.slice();
-    newTasks.splice(index, 1);
-    setTasks(newTasks);
+    const newDone = done.slice();
+    newDone.splice(index, 1);
+    setDone(newDone);
   };
 
   const handleDoneTask = (index) => {
@@ -54,15 +54,22 @@ const Tasks = () => {
       <ul>
         <h4>Tasks</h4>
         {tasks.map((task, index) => (
-          <li key={index}> {task} 
-          <button onClick={() => handleDoneTask(index)}><FontAwesomeIcon icon={faCheck} /></button> 
-          <button onClick={() => handleDeleteTask(index)}><FontAwesomeIcon icon={faTrash} /></button></li>
+          <li key={index}>
+            {task}
+              <button onClick={() => handleDoneTask(index)}><FontAwesomeIcon icon={faCheck} /></button>
+          </li>
         ))}
       </ul>
       <ul>
         <h4>Completed Tasks</h4>
         {done.map((task, index) => (
-          <li key={index}> {task} <button onClick={() => handleUndoTask(index)}><FontAwesomeIcon icon={faRotateLeft} /></button></li>
+          <li key={index}>
+            {task}
+            <span>
+              <button onClick={() => handleUndoTask(index)}><FontAwesomeIcon icon={faRotateLeft} /></button>
+              <button onClick={() => handleDeleteTask(index)}><FontAwesomeIcon icon={faTrash} /></button>
+            </span>
+          </li>
         ))}
       </ul>
     </div>
