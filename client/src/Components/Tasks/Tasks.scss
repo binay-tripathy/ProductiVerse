@@ -1,47 +1,104 @@
 .todo-list-container {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+
   h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 28px;
+    margin-bottom: 20px;
   }
 
   .task-input {
     display: flex;
-    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
 
     input[type="text"] {
       border-radius: 5px;
       flex: 1;
-      padding: 5px;
+      padding: 10px;
       font-size: 16px;
+      border: 1px solid #ccc;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+      }
     }
 
     button {
-      padding: 5px 10px;
+      padding: 10px 20px;
       background-color: #007bff;
       border-radius: 5px;
       border: none;
       cursor: pointer;
       font-size: 16px;
       margin-left: 10px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3;
+      }
     }
   }
 
-  ul {
+  .task-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 10px;
   }
 
-  li {
+  .task-item {
+    background-color: #fff;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 0;
-    font-size: 18px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
 
-    button {
-      border: none;
-      cursor: pointer;
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+
+  .completed-tasks {
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+    padding-inline-start: 0;
+    .completed-task {
+      width: 90%;
+      margin: 0 auto;
+      background-color: #e8f5e9;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+      &:hover {
+        background-color: #d7ecd2;
+      }
+    }
+  }
+
+  .actions {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    &:hover {
+      color: #666;
     }
   }
 }
