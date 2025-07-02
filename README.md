@@ -7,10 +7,14 @@
 
 ## 🚀 Features
 
-- **Productivity Tools**: A comprehensive suite of tools to boost your daily productivity
-- **Modern Tech Stack**: Built with Vite + React for fast performance
-- **Chrome Integration**: Seamlessly integrates with your Chrome browser
-- **Customizable**: Personalize settings according to your workflow
+- **📝 Task Manager**: Create, organize, and track your daily tasks with an intuitive to-do list interface
+- **🎵 Focus Music**: Built-in music player with curated playlists to enhance concentration and productivity
+- **🍅 Pomodoro Timer**: Time management technique with customizable work/break intervals to maximize focus
+- **🚫 Website Blocker**: Block distracting websites during work sessions to maintain concentration
+- **💭 Daily Quotes**: Inspirational quotes to motivate and energize your productivity journey
+- **Modern Tech Stack**: Built with Vite + React for fast performance and smooth user experience
+- **Chrome Integration**: Seamlessly integrates with your Chrome browser as a lightweight extension
+
 
 ## 🛠️ Development
 
