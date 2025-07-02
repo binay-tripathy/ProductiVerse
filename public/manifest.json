@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "ProductiVerse",
+  "version": "1.0.0",
+  "description": "Your Ultimate Productivity Chrome Extension",
+  "permissions": [
+    "storage",
+    "tabs",
+    "webRequest",
+    "webNavigation",
+    "notifications",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "ProductiVerse - Boost Your Productivity",
+    "default_icon": {
+      "16": "icons/favicon-16x16.png",
+      "32": "icons/favicon-32x32.png",
+      "48": "icons/favicon-32x32.png",
+      "128": "icons/android-chrome-192x192.png"
+    }
+  },
+  "icons": {
+    "16": "icons/favicon-16x16.png",
+    "32": "icons/favicon-32x32.png",
+    "48": "icons/favicon-32x32.png",
+    "128": "icons/android-chrome-192x192.png",
+    "192": "icons/android-chrome-192x192.png",
+    "512": "icons/android-chrome-512x512.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; media-src 'self' https://assets.mixkit.co https://archive.org https://www.soundjay.com data: blob:;"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "blocked.html",
+        "icons/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

@@ -1,73 +1,114 @@
-# ProductiVerse - Your Ultimate Productivity Chrome Extension
+# ProductiVerse
 
-## Overview
+> Your Ultimate Productivity Chrome Extension built with Vite + React
 
-ProductiVerse is a versatile and feature-packed Chrome extension designed to boost your productivity and help you stay focused. With ProductiVerse, you can manage your tasks, create custom playlists, utilize the Pomodoro technique, block distracting websites, stay motivated with inspirational quotes, track your progress with analytics, and provide valuable feedback. It's an all-in-one productivity solution.
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-blue.svg)](https://chrome.google.com/webstore)
 
-## Features
+## 🚀 Features
 
-<!-- ### 1. Task Manager
-- Create, organize, and prioritize your tasks efficiently.
-- Categorize tasks into projects for better organization.
-- Set due dates, reminders, and task dependencies.
+- **Productivity Tools**: A comprehensive suite of tools to boost your daily productivity
+- **Modern Tech Stack**: Built with Vite + React for fast performance
+- **Chrome Integration**: Seamlessly integrates with your Chrome browser
+- **Customizable**: Personalize settings according to your workflow
 
-### 2. Playlist Player
-- Build and enjoy personalized music playlists while you work.
-- Seamless integration with popular music streaming services.
-- Enhance your concentration and mood with the perfect soundtrack.
+## 🛠️ Development
 
-### 3. Pomodoro Timer
-- Boost your productivity with timed work and break intervals.
-- Customize timer settings to suit your work style.
-- Stay on track and maintain a healthy work-life balance.
+### Prerequisites
 
-### 4. Website Blocker
-- Block distracting websites during your work hours.
-- Increase your focus and reduce online temptations.
-- Customize your blocklist for maximum productivity.
+- Node.js (v16 or higher)
+- npm
+- Chrome browser
 
-### 5. Inspirational Quotes
-- Get inspired daily with motivational quotes.
-- Elevate your mindset and stay motivated throughout the day.
-- Share your favorite quotes with friends and colleagues. -->
+### Setup
 
-<!-- ### 6. Analytics Dashboard
-- Track your productivity, task completion, and time management.
-- Visualize your performance trends with insightful charts.
-- Make data-driven decisions to optimize your workflow.
+```bash
+# Clone the repository
+git clone https://github.com/binay-tripathy/ProductiVerse.git
+cd ProductiVerse
 
-### 7. Feedback and Support
-- Share your thoughts and suggestions to help us improve ProductiVerse.
-- We value your feedback and are dedicated to enhancing your experience.
-- Reach out to our support team for assistance anytime. -->
+# Install dependencies
+npm install
 
-## Installation
-<!-- 
-1. Visit the [Chrome Web Store](https://chrome.google.com/webstore).
-2. Search for "ProductiVerse" and click "Add to Chrome."
-3. Follow the on-screen instructions to complete the installation. -->
+# Start development server
+npm run dev
+```
 
-## Getting Started
-<!-- 
-1. Click the ProductiVerse icon in your Chrome toolbar.
-2. Sign in or create an account to unlock all features.
-3. Explore the powerful productivity tools at your fingertips. -->
+## 📦 Available Scripts
 
-## Support and Contact
+### `npm run dev`
 
-<!-- If you have questions, encounter issues, or wish to provide feedback, please don't hesitate to reach out to our dedicated support team at support@productiverse.com. Your satisfaction is our top priority. -->
+Runs the app in development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## Stay Connected
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-<!-- - Website: [https://www.productiverse.com](https://www.productiverse.com)
-- Twitter: [@ProductiVerse](https://twitter.com/ProductiVerse)
-- Facebook: [ProductiVerse](https://www.facebook.com/ProductiVerse) -->
+### `npm run build`
 
-## Contribute
+Builds the app for production to the `dist` folder.\
+The build is optimized and ready for Chrome extension deployment.
 
-<!-- Are you a developer interested in contributing to ProductiVerse? Check out our GitHub repository [here](https://github.com/productiverse) to get involved and help us make the extension even better. -->
+### `npm run preview`
 
-## License
+Serves the production build locally for preview.
 
-ProductiVerse is available under the [MIT License](LICENSE.md).
+### `npm test`
+
+Launches the test runner with Vitest.\
+See the [Vitest documentation](https://vitest.dev/) for more information.
+
+### `npm run lint`
+
+Runs ESLint to check for code quality issues.
+
+## 🔧 Installation as Chrome Extension
+
+1. Clone this repository and build the project:
+
+   ```bash
+   git clone https://github.com/binay-tripathy/ProductiVerse.git
+   cd ProductiVerse
+   npm install
+   npm run build
+   ```
+
+2. Open Chrome and navigate to `chrome://extensions/`
+
+3. Enable "Developer mode" in the top right corner
+
+4. Click "Load unpacked" and select the `dist` folder from this project
+
+5. The ProductiVerse extension should now be installed and ready to use
+
+## 🎯 Getting Started
+
+1. Click the ProductiVerse icon in your Chrome toolbar
+2. Explore the different productivity tools available
+3. Customize settings according to your preferences
+4. Start boosting your productivity!
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🐛 Issues & Support
+
+If you encounter any issues or have suggestions for improvements, please [open an issue](https://github.com/binay-tripathy/ProductiVerse/issues).
+
+## 📚 Learn More
+
+- [Vite Documentation](https://vitejs.dev/)
+- [React Documentation](https://reactjs.org/)
+- [Chrome Extensions Documentation](https://developer.chrome.com/docs/extensions/)
 

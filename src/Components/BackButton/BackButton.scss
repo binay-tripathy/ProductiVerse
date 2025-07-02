@@ -1,0 +1,60 @@
+.back-button {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  
+  &:hover {
+    background-color: var(--surface-color);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateX(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  &:active {
+    transform: translateX(-1px);
+  }
+  
+  svg {
+    width: 10px;
+    height: 10px;
+    transition: transform var(--transition-fast);
+  }
+  
+  &:hover svg {
+    transform: translateX(-1px);
+  }
+  
+  span {
+    font-size: 10px;
+    letter-spacing: 0.025em;
+  }
+}
+
+// Alternative style for light backgrounds
+.back-button.on-light {
+  background-color: var(--surface-color);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+  
+  &:hover {
+    background-color: var(--primary-lighter);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+}
