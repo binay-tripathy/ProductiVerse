@@ -4,10 +4,6 @@ import Quote from '../Quote/Quote';
 import brainLogo from '/icons/android-chrome-512x512.png';
 
 const NavPage = () => {
-    // Check if we're on the home page
-    const currentPath = window.location.hash;
-    const isHomePage = currentPath === '#/' || currentPath === '';
-
     return (
         <div className='container'>
             <div className="header">

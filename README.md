@@ -8,7 +8,7 @@
 ## 🚀 Features
 
 - **📝 Task Manager**: Create, organize, and track your daily tasks with an intuitive to-do list interface
-- **🎵 Focus Music**: Built-in music player with curated playlists to enhance concentration and productivity
+- **🎵 Focus Sounds**: Built-in ambient sound player to enhance concentration and productivity
 - **🍅 Pomodoro Timer**: Time management technique with customizable work/break intervals to maximize focus
 - **🚫 Website Blocker**: Block distracting websites during work sessions to maintain concentration
 - **💭 Daily Quotes**: Inspirational quotes to motivate and energize your productivity journey

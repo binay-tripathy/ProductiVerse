@@ -83,6 +83,10 @@
       border-radius: 2px;
       outline: none;
       cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
 
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
@@ -92,6 +96,13 @@
         background: #10b981;
         border: 2px solid white;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        cursor: grab;
+        transition: transform 0.1s ease;
+      }
+
+      &::-webkit-slider-thumb:active {
+        cursor: grabbing;
+        transform: scale(1.1);
       }
 
       &::-moz-range-thumb {
@@ -101,16 +112,34 @@
         background: #10b981;
         border: 2px solid white;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        cursor: pointer;
+        cursor: grab;
+        transition: transform 0.1s ease;
+      }
+
+      &::-moz-range-thumb:active {
+        cursor: grabbing;
+        transform: scale(1.1);
       }
 
       &:focus {
         outline: none;
-        caret-color: transparent;
       }
 
-      &:active {
-        caret-color: transparent;
+      &:focus::-webkit-slider-thumb {
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(16, 185, 129, 0.2);
+      }
+
+      &:focus::-moz-range-thumb {
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(16, 185, 129, 0.2);
+      }
+
+      // Prevent text selection during drag
+      &::selection {
+        background: transparent;
+      }
+
+      &::-moz-selection {
+        background: transparent;
       }
     }
   }

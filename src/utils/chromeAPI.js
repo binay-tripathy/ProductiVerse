@@ -1,13 +1,8 @@
-/**
- * Utility functions for interacting with Chrome extension APIs
- * that work safely in both extension and development environments
- */
-
 export const isChromeExtension = () => {
-  return typeof window !== 'undefined' && 
-         window.chrome && 
-         window.chrome.storage && 
-         window.chrome.runtime;
+  return typeof window !== 'undefined' &&
+    typeof window.chrome !== 'undefined' &&
+    window.chrome.runtime &&
+    typeof window.chrome.runtime.id !== 'undefined';
 };
 
 export const saveToStorage = (key, value) => {
@@ -70,36 +65,63 @@ export const getMultipleFromStorage = (keys) => {
   });
 };
 
-export const sendRuntimeMessage = (message) => {
-  return new Promise((resolve, reject) => {
-    if (isChromeExtension()) {
-      try {
-        window.chrome.runtime.sendMessage(message, (response) => {
-          const runtimeError = window.chrome.runtime.lastError;
-          if (runtimeError) {
-            console.warn('Chrome runtime error:', runtimeError.message);
-            resolve({ success: false, error: runtimeError.message });
-          } else {
-            resolve(response || { success: true });
-          }
-        });
-      } catch (error) {
-        console.error('Error sending chrome message:', error);
-        resolve({ success: false, error: error.message });
+export const sendRuntimeMessage = async (message, retries = 3) => {
+  if (!isChromeExtension()) {
+    return { success: false, error: 'Not in Chrome extension environment' };
+  }
+
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      if (!chrome.runtime?.id) {
+        throw new Error('Extension runtime not available');
       }
-    } else {
-      console.log('Chrome runtime not available, message would be:', message);
-      
-      // Simulate storage operations for development environment
-      if (message.action === 'updateBlockedSites') {
-        localStorage.setItem('blockedSites', JSON.stringify(message.sites));
-        localStorage.setItem('isBlockingEnabled', JSON.stringify(message.enabled));
-        localStorage.setItem('workStartTime', message.startTime);
-        localStorage.setItem('workEndTime', message.endTime);
-        console.log('Website blocking settings saved to localStorage (development mode)');
+      const response = await chrome.runtime.sendMessage(message);
+      if (chrome.runtime.lastError) {
+        const error = chrome.runtime.lastError.message;
+        if (error.includes('Could not establish connection') || 
+            error.includes('Receiving end does not exist')) {
+          throw new Error(error);
+        }
+        throw new Error(error);
       }
-      
-      resolve({ success: false, development: true });
+      return response;
+    } catch (error) {
+      if (error.message.includes('Could not establish connection') || 
+          error.message.includes('Receiving end does not exist')) {
+        if (attempt === retries - 1) {
+          return { success: true };
+        }
+      } else {
+        console.warn(`Runtime message attempt ${attempt + 1} failed:`, error.message);
+      }
+      if (attempt === retries - 1) {
+        throw error;
+      }
+      await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 100));
     }
-  });
-}
+  }
+};
+
+export const connectToBackground = () => {
+  if (isChromeExtension()) {
+    try {
+      const port = window.chrome.runtime.connect({ name: 'popup-keepalive' });
+      return port;
+    } catch (e) {
+      return null;
+    }
+  }
+  return null;
+};
+
+export const checkBackgroundConnection = async () => {
+  if (!isChromeExtension()) {
+    return false;
+  }
+  try {
+    const response = await chrome.runtime.sendMessage({ type: 'PING' });
+    return response && response.success;
+  } catch (error) {
+    return false;
+  }
+};

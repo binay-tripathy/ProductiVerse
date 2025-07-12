@@ -7,176 +7,143 @@ import {
   faVolumeOff,
   faHeadphones
 } from '@fortawesome/free-solid-svg-icons';
-import { getMultipleFromStorage, saveMultipleToStorage } from '../../utils/chromeAPI';
 import BackButton from '../BackButton/BackButton';
+import { sendRuntimeMessage, connectToBackground } from '../../utils/chromeAPI';
 
 const AMBIENT_SOUNDS = [
   {
     id: 'rain',
     name: 'Rain',
     description: 'Gentle rainfall',
-    iconColor: '#4285f4',
-    audioUrl: 'https://www.soundjay.com/nature/sounds/rain-07.mp3'
+    iconColor: '#4285f4'
   },
   {
     id: 'forest',
     name: 'Forest',
     description: 'Birds chirping',
-    iconColor: '#0f9d58',
-    audioUrl: 'https://assets.mixkit.co/active_storage/sfx/1210/1210-preview.mp3'
+    iconColor: '#0f9d58'
   },
   {
     id: 'fireplace',
     name: 'Fireplace',
     description: 'Crackling fire',
-    iconColor: '#ea4335',
-    audioUrl: 'https://assets.mixkit.co/active_storage/sfx/1736/1736-preview.mp3'
+    iconColor: '#ea4335'
   },
   {
     id: 'meditation',
     name: 'Meditation',
     description: 'Peaceful ambient',
-    iconColor: '#795548',
-    audioUrl: 'https://assets.mixkit.co/active_storage/sfx/2452/2452-preview.mp3'
+    iconColor: '#795548'
   },
   {
     id: 'night',
     name: 'Night Sounds',
     description: 'Crickets & nature',
-    iconColor: '#9c27b0',
-    audioUrl: 'https://assets.mixkit.co/active_storage/sfx/1782/1782-preview.mp3'
+    iconColor: '#9c27b0'
   },
   {
     id: 'waves',
     name: 'Ocean',
     description: 'Gentle waves',
-    iconColor: '#03a9f4',
-    audioUrl: 'https://assets.mixkit.co/active_storage/sfx/1196/1196-preview.mp3'
+    iconColor: '#03a9f4'
   }
 ];
 
 const Music = () => {
-  const [currentSound, setCurrentSound] = useState(null);
-  const [masterVolume, setMasterVolume] = useState(0.7);
-  const [muted, setMuted] = useState(false);
+  const [musicState, setMusicState] = useState({
+    currentSound: null,
+    masterVolume: 0.7,
+    muted: false,
+    isPlaying: false
+  });
   const [isLoading, setIsLoading] = useState(true);
-  const [audioLoaded, setAudioLoaded] = useState(false);
+  const [pending, setPending] = useState(false);
+  const volumeTimeoutRef = useRef(null);
 
-  const audioRef = useRef(null);
+  const syncMusicState = async () => {
+    try {
+      const response = await sendRuntimeMessage({ type: 'GET_MUSIC_STATE' });
+      if (response?.success !== false) {
+        setMusicState(response);
+      }
+    } catch (error) {
+      console.error("Error syncing music state:", error);
+    }
+  };
 
   useEffect(() => {
-    const loadSettings = async () => {
-      try {
-        setIsLoading(true);
-        const result = await getMultipleFromStorage(['ambientSettings']);
-        
-        if (result.ambientSettings) {
-          if (result.ambientSettings.currentSound) {
-            setCurrentSound(result.ambientSettings.currentSound);
-          }
-          setMasterVolume(result.ambientSettings.masterVolume || 0.7);
-          setMuted(result.ambientSettings.muted || false);
-        }
-      } catch (error) {
-        console.error("Error loading audio settings:", error);
-      } finally {
-        setIsLoading(false);
-      }
+    const loadState = async () => {
+      await syncMusicState();
+      setIsLoading(false);
     };
+    loadState();
+
+    const port = connectToBackground();
+    return () => port?.disconnect();
+  }, []);
+
+  const playSound = async (soundId) => {
+    if (pending) return;
+    setPending(true);
     
-    loadSettings();
+    try {
+      if (musicState.currentSound === soundId && musicState.isPlaying) {
+        await sendRuntimeMessage({ type: 'STOP_SOUND' });
+      } else {
+        await sendRuntimeMessage({ 
+          type: 'PLAY_SOUND', 
+          payload: { soundId } 
+        });
+      }
+      await syncMusicState();
+    } catch (error) {
+      console.error('Error controlling sound:', error);
+    } finally {
+      setPending(false);
+    }
+  };
+
+  const handleVolumeChange = (volume) => {
+    setMusicState(prev => ({ ...prev, masterVolume: volume }));
     
+    if (volumeTimeoutRef.current) {
+      clearTimeout(volumeTimeoutRef.current);
+    }
+    
+    volumeTimeoutRef.current = setTimeout(async () => {
+      try {
+        await sendRuntimeMessage({ 
+          type: 'UPDATE_VOLUME', 
+          payload: { volume } 
+        });
+      } catch (error) {
+        console.error('Error updating volume:', error);
+        await syncMusicState();
+      }
+    }, 300);
+  };
+
+  const toggleMute = async () => {
+    if (pending) return;
+    setPending(true);
+    
+    try {
+      await sendRuntimeMessage({ type: 'TOGGLE_MUTE' });
+      await syncMusicState();
+    } catch (error) {
+      console.error('Error toggling mute:', error);
+    } finally {
+      setPending(false);
+    }
+  };
+
+  useEffect(() => {
     return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
+      if (volumeTimeoutRef.current) {
+        clearTimeout(volumeTimeoutRef.current);
       }
     };
   }, []);
-
-  useEffect(() => {
-    if (!audioRef.current) return;
-    
-    if (currentSound) {
-      const soundData = AMBIENT_SOUNDS.find(s => s.id === currentSound);
-      if (soundData) {
-        audioRef.current.src = soundData.audioUrl;
-        audioRef.current.volume = muted ? 0 : masterVolume;
-        audioRef.current.loop = true;
-        
-        const handleCanPlay = () => {
-          audioRef.current.play()
-            .then(() => {
-              setAudioLoaded(true);
-            })
-            .catch(error => {
-              console.error("Error playing audio:", error);
-              setAudioLoaded(false);
-            });
-        };
-        
-        const handleError = (error) => {
-          console.error("Audio playback error:", error);
-          setAudioLoaded(false);
-        };
-        
-        audioRef.current.addEventListener('canplaythrough', handleCanPlay);
-        audioRef.current.addEventListener('error', handleError);
-        
-        return () => {
-          if (audioRef.current) {
-            audioRef.current.removeEventListener('canplaythrough', handleCanPlay);
-            audioRef.current.removeEventListener('error', handleError);
-          }
-        };
-      }
-    } else {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      audioRef.current.src = '';
-    }
-  }, [currentSound]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = muted ? 0 : masterVolume;
-    }
-  }, [masterVolume, muted]);
-
-  const saveSettings = async () => {
-    try {
-      await saveMultipleToStorage({
-        ambientSettings: {
-          currentSound,
-          masterVolume,
-          muted
-        }
-      });
-    } catch (error) {
-      console.error("Error saving audio settings:", error);
-    }
-  };
-
-  useEffect(() => {
-    saveSettings();
-  }, [currentSound, masterVolume, muted]);
-
-  const playSound = (soundId) => {
-    if (currentSound === soundId) {
-      setCurrentSound(null);
-    } else {
-      if (audioRef.current && !audioRef.current.paused) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-      }
-      
-      setCurrentSound(soundId);
-      setAudioLoaded(false);
-    }
-  };
-
-  const toggleMute = () => {
-    setMuted(prev => !prev);
-  };
 
   if (isLoading) {
     return (
@@ -196,15 +163,14 @@ const Music = () => {
       </div>
       
       <div className="music-content">
-        <audio ref={audioRef} />
-        
         <div className="main-controls">
           <div className="volume-control">
             <button 
               className="volume-toggle" 
               onClick={toggleMute}
+              disabled={pending}
             >
-              <FontAwesomeIcon icon={muted ? faVolumeOff : faVolumeHigh} />
+              <FontAwesomeIcon icon={musicState.muted ? faVolumeOff : faVolumeHigh} />
             </button>
             
             <input 
@@ -212,8 +178,8 @@ const Music = () => {
               min="0" 
               max="1" 
               step="0.01" 
-              value={masterVolume}
-              onChange={(e) => setMasterVolume(parseFloat(e.target.value))}
+              value={musicState.masterVolume}
+              onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
               className="volume-slider"
             />
           </div>
@@ -223,14 +189,18 @@ const Music = () => {
           {AMBIENT_SOUNDS.map(sound => (
             <div 
               key={sound.id}
-              className={`sound-card ${currentSound === sound.id ? 'active' : ''}`}
-              onClick={() => playSound(sound.id)}
+              className={`sound-card ${
+                musicState.currentSound === sound.id && musicState.isPlaying ? 'active' : ''
+              } ${pending ? 'disabled' : ''}`}
+              onClick={() => !pending && playSound(sound.id)}
             >
               <div 
                 className="sound-icon"
                 style={{ backgroundColor: sound.iconColor }}
               >
-                <FontAwesomeIcon icon={currentSound === sound.id ? faPause : faHeadphones} />
+                <FontAwesomeIcon 
+                  icon={musicState.currentSound === sound.id && musicState.isPlaying ? faPause : faHeadphones} 
+                />
               </div>
               <div className="sound-info">
                 <h3>{sound.name}</h3>
@@ -240,11 +210,10 @@ const Music = () => {
           ))}
         </div>
         
-        {currentSound && (
+        {musicState.currentSound && musicState.isPlaying && (
           <div className="now-playing">
             <span>Now playing:</span>
-            <strong>{AMBIENT_SOUNDS.find(s => s.id === currentSound)?.name}</strong>
-            {!audioLoaded && <span className="loading-indicator">Loading...</span>}
+            <strong>{AMBIENT_SOUNDS.find(s => s.id === musicState.currentSound)?.name}</strong>
           </div>
         )}
       </div>

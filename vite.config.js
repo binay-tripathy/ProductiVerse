@@ -18,8 +18,5 @@ export default defineConfig({
         main: './index.html'
       }
     }
-  },
-  server: {
-    port: 3000
   }
 })

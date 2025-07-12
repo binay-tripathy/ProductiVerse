@@ -82,20 +82,22 @@ const Tasks = () => {
 
   useEffect(() => {
     const loadTasks = async () => {
-      const result = await getMultipleFromStorage(['tasks', 'completedTasks', 'taskIdCounter']);
-
-      const normalizeTasks = (taskList) => {
-        return (taskList || []).map(task => {
-          if (typeof task === 'string') {
-            return { id: `task-${Date.now()}-${Math.random()}`, text: task };
-          }
-          return task;
-        });
-      };
-
-      if (result.tasks) setTasks(normalizeTasks(result.tasks));
-      if (result.completedTasks) setDone(normalizeTasks(result.completedTasks));
-      if (result.taskIdCounter) setTaskIdCounter(result.taskIdCounter);
+      try {
+        const result = await getMultipleFromStorage(['tasks', 'completedTasks', 'taskIdCounter']);
+        const normalizeTasks = (taskList) => {
+          return (taskList || []).map(task => {
+            if (typeof task === 'string') {
+              return { id: `task-${Date.now()}-${Math.random()}`, text: task };
+            }
+            return task;
+          });
+        };
+        if (result.tasks) setTasks(normalizeTasks(result.tasks));
+        if (result.completedTasks) setDone(normalizeTasks(result.completedTasks));
+        if (result.taskIdCounter) setTaskIdCounter(result.taskIdCounter);
+      } catch (error) {
+        console.warn('Failed to load tasks from storage:', error);
+      }
     };
 
     loadTasks();
@@ -114,7 +116,7 @@ const Tasks = () => {
   const handleAddTask = () => {
     if (taskText.trim() !== '') {
       const newTask = {
-        id: `task-${taskIdCounter}`,
+        id: `task-${Date.now()}-${Math.random()}`,
         text: taskText.trim()
       };
       setTasks([...tasks, newTask]);

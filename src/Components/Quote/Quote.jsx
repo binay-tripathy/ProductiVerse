@@ -5,42 +5,42 @@ import fetchApi from './fetchApi';
 const Quote = () => {
     const [quote, setQuote] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchQuote = async () => {
             try {
                 setIsLoading(true);
 
-                // Try to get the quote from storage first
                 const storedQuote = localStorage.getItem('dailyQuote');
                 const storedTimestamp = localStorage.getItem('quoteTimestamp');
                 const now = new Date().getTime();
 
-                // If we have a stored quote that's less than 24 hours old, use it
                 if (storedQuote && storedTimestamp && (now - storedTimestamp < 86400000)) {
                     setQuote(JSON.parse(storedQuote));
                 } else {
-                    // Otherwise fetch a new quote
                     const responseData = await fetchApi();
                     if (responseData && responseData.length > 0) {
                         const newQuote = responseData[0];
                         setQuote(newQuote);
 
-                        // Store the quote and timestamp
                         localStorage.setItem('dailyQuote', JSON.stringify(newQuote));
                         localStorage.setItem('quoteTimestamp', now.toString());
+                    } else {
+                        throw new Error('No valid quote data received');
                     }
                 }
             } catch (error) {
-                console.error('Error fetching quote:', error);
-                setError('Failed to load your daily inspiration. Please try again later.');
-                
-                // Use a fallback quote if there's an error
-                setQuote({
-                    q: "The secret of getting ahead is getting started.",
-                    a: "Mark Twain"
-                });
+                const emergencyQuotes = [
+                    { q: "The secret of getting ahead is getting started.", a: "Mark Twain" },
+                    { q: "Your limitation—it's only your imagination.", a: "Unknown" },
+                    { q: "Push yourself, because no one else is going to do it for you.", a: "Unknown" },
+                    { q: "Great things never come from comfort zones.", a: "Unknown" },
+                    { q: "Dream it. Wish it. Do it.", a: "Unknown" },
+                    { q: "The best way to predict the future is to create it.", a: "Peter Drucker" },
+                    { q: "Success is not final, failure is not fatal: It is the courage to continue that counts.", a: "Winston Churchill" }
+                ];
+                const randomQuote = emergencyQuotes[Math.floor(Math.random() * emergencyQuotes.length)];
+                setQuote(randomQuote);
             } finally {
                 setIsLoading(false);
             }
@@ -53,13 +53,13 @@ const Quote = () => {
         <div className="quote-container">
             {isLoading ? (
                 <p className="loading">Loading your daily inspiration...</p>
-            ) : error ? (
-                <p className="error">{error}</p>
-            ) : quote && (
+            ) : quote ? (
                 <div className="quote-item">
                     <p className="quote">{quote.q}</p>
                     <p className="author">- {quote.a}</p>
                 </div>
+            ) : (
+                <p className="error">Unable to load quotes at the moment</p>
             )}
         </div>
     );
